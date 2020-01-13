@@ -91,11 +91,12 @@ public class ArticlePresenter implements BasePresenter {
 
         for(int i=0; i<quantity; i++){
             Article nextarticle;
-            String movietitle = "Movie title " + uniqIdArray.get(i);
+            String movietitle = "Some click-bait title here " + uniqIdArray.get(i);
             long id = uniqIdArray.get(i);
             nextarticle = new Article(id, movietitle);
-            String moviedescription = "Movie description " + nextarticle.hashCode();
+            String moviedescription = "Article description has describe us an article, sic! " + nextarticle.hashCode();
             nextarticle.setContent(moviedescription);
+            nextarticle.setMediatitle("Fake News Corp");
             if(id%2!=0) {
                 nextarticle.setState(States.NOPICTURE);
             } else {

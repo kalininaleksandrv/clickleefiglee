@@ -2,4 +2,5 @@
     <string name="app_name">КликлиФигли</string>
     <string name="title_activity_mainpage">КликлиФигли</string>
     <string name="article_image">превью статьи</string>
+    <string name="media_logo">логотип медиа источникка</string>
 </resources>

@@ -3,4 +3,5 @@
     <string name="app_name">ClickleeFiglee</string>
     <string name="title_activity_mainpage">ClickleeFiglee</string>
     <string name="article_image">article picture</string>
+    <string name="media_logo">media source logo</string>
 </resources>
