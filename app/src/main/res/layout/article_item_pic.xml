@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="10dp"
+    android:layout_marginEnd="10dp">
+
+    <ImageView
+        android:id="@+id/pic_imageView"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintEnd_toStartOf="@+id/pic_textView_title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:scaleType="fitXY"
+        android:contentDescription="@string/article_image" />
+
+    <TextView
+        android:id="@+id/pic_textView_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:textSize="50sp"
+        tools:text="some title here"
+        app:layout_constraintStart_toEndOf="@+id/pic_imageView"
+        app:layout_constraintBottom_toTopOf="@id/pic_barier"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/pic_textView_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:textSize="30sp"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        tools:text="111"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/pic_textView_description"
+        app:layout_constraintTop_toBottomOf="@id/pic_barier" />
+
+    <TextView
+        android:id="@+id/pic_textView_description"
+        android:layout_width="wrap_content"
+        app:layout_constrainedWidth="true"
+        android:layout_height="0dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:textSize="30sp"
+        android:gravity="end"
+        tools:text="some boring description newer no one reade here"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/pic_textView_id"
+        app:layout_constraintTop_toBottomOf="@id/pic_barier" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/pic_barier"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="pic_imageView,pic_textView_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
