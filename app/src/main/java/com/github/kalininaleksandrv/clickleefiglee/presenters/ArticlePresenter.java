@@ -4,6 +4,8 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
+import androidx.recyclerview.widget.ItemTouchHelper;
+
 import com.github.kalininaleksandrv.clickleefiglee.MainPageActivity;
 import com.github.kalininaleksandrv.clickleefiglee.dao.Article;
 import com.github.kalininaleksandrv.clickleefiglee.dao.Constants;
@@ -75,6 +77,24 @@ public class ArticlePresenter implements BasePresenter {
     public ArrayList<Article> getDataToActivity() {
         Log.i("MY", "Trying to fetch data to activity");
         return data;
+    }
+
+    @Override
+    public void changeDataById(long folowingId, int changeStatus) {
+
+        Log.i("MY", "Trying to change data by id");
+
+        int index;
+
+        for (Article item : data){
+            if(item.getId() == folowingId){
+                index = data.indexOf(item);
+                if (changeStatus == ItemTouchHelper.START) item.setFakeNews(true);
+                if (changeStatus == ItemTouchHelper.END) item.setClickBait(true);
+                data.set(index, item);
+            }
+        }
+        System.out.println("mark");
     }
 
     private void getDataFromModel(int startposition, int quantity) {

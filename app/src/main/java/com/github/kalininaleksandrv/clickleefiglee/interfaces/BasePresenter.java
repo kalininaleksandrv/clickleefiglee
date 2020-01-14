@@ -19,5 +19,5 @@ public interface BasePresenter {
 
     ArrayList<Article> getDataToActivity() throws ExecutionException, InterruptedException;
 
-
+    void changeDataById(long id, int changeStatus);
 }

@@ -38,8 +38,10 @@ class PicViewHolder extends AbstractViewHolder {
         descriptionview.setText(article.getContent());
         imageviewrel.setImageResource(R.drawable.samplepic_preview);
 
+        final int position = this.getAdapterPosition();
+
         //use interface OnArticleClickListener to pass movie instance when user clicked on item
-        itemView.setOnClickListener(v -> onArticleClickListener.onArticleClick(article));
+        itemView.setOnClickListener(v -> onArticleClickListener.onArticleClick(position));
     }
 
     public View getItemView() {

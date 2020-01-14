@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -22,6 +23,7 @@ import com.github.kalininaleksandrv.clickleefiglee.interfaces.BaseUi;
 import com.github.kalininaleksandrv.clickleefiglee.interfaces.OnArticleClickListener;
 import com.github.kalininaleksandrv.clickleefiglee.presenters.ArticlePresenter;
 import com.github.kalininaleksandrv.clickleefiglee.utilities.AdvancedMovieAdapter;
+import com.github.kalininaleksandrv.clickleefiglee.utilities.ArticleTouchHelperCallback;
 import com.github.kalininaleksandrv.clickleefiglee.viewmodels.PresenterViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -122,8 +124,10 @@ public class MainPageActivity extends AppCompatActivity implements OnArticleClic
 
     //implement interface to hold click within recycle view
     @Override
-    public void onArticleClick(Article article) {
-        Toast.makeText(getApplicationContext(), article.toString(), Toast.LENGTH_SHORT).show();
+    public void onArticleClick(int position) {
+        internalList.get(position).setTitle("Some changed title");
+        advancedMovieAdapter.notifyItemChanged(position);
+        Toast.makeText(getApplicationContext(), String.valueOf(position), Toast.LENGTH_SHORT).show();
     }
 
     private void recyclerViewInitializer() {
@@ -131,9 +135,14 @@ public class MainPageActivity extends AppCompatActivity implements OnArticleClic
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         //pass interface OnArticleClickListener to adapter and then to OnBindViewHolder
-        advancedMovieAdapter = new AdvancedMovieAdapter(this, internalList, this);
+        advancedMovieAdapter = new AdvancedMovieAdapter(this, internalList, this, presenter);
         recyclerView.setAdapter(advancedMovieAdapter);
         recyclerView.setLayoutManager(layoutManager);
+
+        ItemTouchHelper.Callback callback =
+                new ArticleTouchHelperCallback(advancedMovieAdapter);
+        ItemTouchHelper touchHelper = new ItemTouchHelper(callback);
+        touchHelper.attachToRecyclerView(recyclerView);
     }
 
     private void viewInitializer() {

@@ -4,6 +4,6 @@ import com.github.kalininaleksandrv.clickleefiglee.dao.Article;
 
 public interface OnArticleClickListener {
 
-    void onArticleClick(Article article);
+    void onArticleClick(int position);
 
 }

@@ -6,11 +6,6 @@ import java.util.Objects;
 
 public class Article {
 
-    public Article(long id, @NonNull String title) {
-        Id = id;
-        this.title = title;
-    }
-
     private long Id;
     @NonNull
     private String title;
@@ -20,6 +15,19 @@ public class Article {
     private String mediatitle;
     private String medialogo;
     private String date;
+    private String author;
+    private boolean isClickBait;
+    private boolean isFakeNews;
+
+
+    public Article(long id, @NonNull String title) {
+        Id = id;
+        this.title = title;
+        this.isClickBait = false;
+        this.isFakeNews = false;
+    }
+
+
 
     @Override
     public boolean equals(Object o) {
@@ -116,5 +124,29 @@ public class Article {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public boolean isClickBait() {
+        return isClickBait;
+    }
+
+    public void setClickBait(boolean clickBait) {
+        isClickBait = clickBait;
+    }
+
+    public boolean isFakeNews() {
+        return isFakeNews;
+    }
+
+    public void setFakeNews(boolean fakeNews) {
+        isFakeNews = fakeNews;
     }
 }

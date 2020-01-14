@@ -33,8 +33,12 @@ class NoPicViewHolder extends AbstractViewHolder {
         titleview.setText(article.getTitle());
         date.setText(article.getDate());
         descriptionview.setText(article.getContent());
+
+        final int position = this.getAdapterPosition();
+
         //use interface OnArticleClickListener to pass movie instance when user clicked on item
-        itemView.setOnClickListener(v -> onArticleClickListener.onArticleClick(article));
+        itemView.setOnClickListener(v -> onArticleClickListener.onArticleClick(position));
+
     }
 
     @Override
