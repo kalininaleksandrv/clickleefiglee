@@ -12,10 +12,12 @@ public interface BasePresenter {
 
     void onAcivityAttach(MainPageActivity view, Handler handler);
     void onActivityDeattach();
-    boolean isActivityAttached();
-    void onUserStartInteraction();
-    void onUserFetchData(int startposition, int quantity, boolean requirenew);
-    ArrayList<Article> getDataToActivity() throws ExecutionException, InterruptedException;
     void setDefaults(MainPageActivity view, Handler uiHandler);
+    void onUserFetchData(int startposition, int quantity, boolean requirenew);
+
+    boolean isActivityAttached();
+
+    ArrayList<Article> getDataToActivity() throws ExecutionException, InterruptedException;
+
 
 }

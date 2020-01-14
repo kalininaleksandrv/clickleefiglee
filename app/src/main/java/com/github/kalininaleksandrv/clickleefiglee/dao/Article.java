@@ -19,6 +19,7 @@ public class Article {
     private String link;
     private String mediatitle;
     private String medialogo;
+    private String date;
 
     @Override
     public boolean equals(Object o) {
@@ -107,5 +108,13 @@ public class Article {
 
     public void setMedialogo(String medialogo) {
         this.medialogo = medialogo;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 }

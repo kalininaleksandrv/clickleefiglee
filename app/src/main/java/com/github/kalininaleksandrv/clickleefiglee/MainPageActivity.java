@@ -39,52 +39,17 @@ public class MainPageActivity extends AppCompatActivity implements OnArticleClic
     ArticlePresenter presenter;
 
     @Override
-    public void showProgress() {
-        if (fab!=null) fab.hide();
-        if (progressBar!=null) progressBar.setVisibility(View.VISIBLE);
-        Log.i("MY", "ACTIVITY showing progress");
-    }
-
-    @Override
-    public void hideProgress() {
-        if (fab!=null) fab.show();
-        if (progressBar!=null) progressBar.setVisibility(View.GONE);
-        Log.i("MY", "ACTIVITY hiding progress");
-
-    }
-
-    @Override
-    public void showData() {
-        advancedMovieAdapter.notifyDataSetChanged();
-        Log.i("MY", "ACTIVITY showing data");
-    }
-
-    @Override
-    public void showError(String error) {
-        Toast.makeText(getApplicationContext(), error, Toast.LENGTH_SHORT).show();
-        Log.i("MY", "ACTIVITY showing error");
-    }
-
-    @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mainpageactivity);
 
-        progressBar = findViewById(R.id.recycling_progressBar);
-        recyclerView = findViewById(R.id.recycling_recycleview);
-        fab = findViewById(R.id.recycling_fab);
+        viewInitializer();
 
         PresenterViewModel model = ViewModelProviders.of(this).get(PresenterViewModel.class);
         presenter = model.getPresenter();
         presenter.setDefaults(this, uiHandler);
 
-        internalList = new ArrayList<>();
-
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
-        //pass interface OnArticleClickListener to adapter and then to OnBindViewHolder
-        advancedMovieAdapter = new AdvancedMovieAdapter(this, internalList, this);
-        recyclerView.setAdapter(advancedMovieAdapter);
-        recyclerView.setLayoutManager(layoutManager);
+        recyclerViewInitializer();
 
     }
 
@@ -114,7 +79,6 @@ public class MainPageActivity extends AppCompatActivity implements OnArticleClic
         };
 
         presenter.onAcivityAttach(this, uiHandler);
-        presenter.onUserStartInteraction();
         presenter.onUserFetchData(0,10, false);
 
         fab.setOnClickListener(v -> presenter.onUserFetchData(0,10, true));
@@ -128,12 +92,54 @@ public class MainPageActivity extends AppCompatActivity implements OnArticleClic
         advancedMovieAdapter = null;
     }
 
+
+    @Override
+    public void showProgress() {
+        if (fab!=null) fab.hide();
+        if (progressBar!=null) progressBar.setVisibility(View.VISIBLE);
+        Log.i("MY", "ACTIVITY showing progress");
+    }
+
+    @Override
+    public void hideProgress() {
+        if (fab!=null) fab.show();
+        if (progressBar!=null) progressBar.setVisibility(View.GONE);
+        Log.i("MY", "ACTIVITY hiding progress");
+
+    }
+
+    @Override
+    public void showData() {
+        advancedMovieAdapter.notifyDataSetChanged();
+        Log.i("MY", "ACTIVITY showing data");
+    }
+
+    @Override
+    public void showError(String error) {
+        Toast.makeText(getApplicationContext(), error, Toast.LENGTH_SHORT).show();
+        Log.i("MY", "ACTIVITY showing error");
+    }
+
     //implement interface to hold click within recycle view
     @Override
     public void onArticleClick(Article article) {
         Toast.makeText(getApplicationContext(), article.toString(), Toast.LENGTH_SHORT).show();
     }
 
+    private void recyclerViewInitializer() {
+        internalList = new ArrayList<>();
 
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        //pass interface OnArticleClickListener to adapter and then to OnBindViewHolder
+        advancedMovieAdapter = new AdvancedMovieAdapter(this, internalList, this);
+        recyclerView.setAdapter(advancedMovieAdapter);
+        recyclerView.setLayoutManager(layoutManager);
+    }
+
+    private void viewInitializer() {
+        progressBar = findViewById(R.id.recycling_progressBar);
+        recyclerView = findViewById(R.id.recycling_recycleview);
+        fab = findViewById(R.id.recycling_fab);
+    }
 
 }

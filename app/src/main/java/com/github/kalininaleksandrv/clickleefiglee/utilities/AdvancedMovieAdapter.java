@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -46,6 +47,9 @@ public class AdvancedMovieAdapter extends RecyclerView.Adapter<AbstractViewHolde
         Article article = articles.get(position);
         //pass interface OnArticleClickListener to adapter and then to OnBindViewHolder
         holder.bind(article, onArticleClickListener);
+        holder.getItemView().setAnimation(AnimationUtils.loadAnimation(context, R.anim.simple_animation_article));
+        holder.getDescriptionview().setAnimation(AnimationUtils.loadAnimation(context, R.anim.alpha_animation));
+        if(holder.getRelatedPic()!=null) holder.getRelatedPic().setAnimation(AnimationUtils.loadAnimation(context, R.anim.translate_plus_alpha));
     }
 
     @Override

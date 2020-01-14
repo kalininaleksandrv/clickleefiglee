@@ -1,6 +1,8 @@
 package com.github.kalininaleksandrv.clickleefiglee.utilities;
 
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,4 +16,7 @@ abstract class AbstractViewHolder extends RecyclerView.ViewHolder {
     }
 
     abstract void bind(Article article, OnArticleClickListener onArticleClickListener);
+    abstract View getItemView();
+    abstract ImageView getRelatedPic();
+    abstract TextView getDescriptionview();
 }

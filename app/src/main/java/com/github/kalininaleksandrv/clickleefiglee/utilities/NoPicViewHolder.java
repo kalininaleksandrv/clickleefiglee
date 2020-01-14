@@ -15,6 +15,7 @@ class NoPicViewHolder extends AbstractViewHolder {
     private ImageView imageviewlogo;
     private View itemView;
     private TextView titleview;
+    private TextView date;
     private TextView descriptionview;
 
     NoPicViewHolder(@NonNull View itemView) {
@@ -22,6 +23,7 @@ class NoPicViewHolder extends AbstractViewHolder {
         this.itemView = itemView;
         this.imageviewlogo = itemView.findViewById(R.id.nopic_imageView_logo);
         this.titleview = itemView.findViewById(R.id.nopic_textView_title);
+        this.date = itemView.findViewById(R.id.nopic_textView_date);
         this.descriptionview = itemView.findViewById(R.id.nopic_textView_description);
     }
 
@@ -29,9 +31,25 @@ class NoPicViewHolder extends AbstractViewHolder {
     void bind(final Article article, final OnArticleClickListener onArticleClickListener) {
         imageviewlogo.setImageResource(R.drawable.ic_new_releases_green_24dp);
         titleview.setText(article.getTitle());
+        date.setText(article.getDate());
         descriptionview.setText(article.getContent());
         //use interface OnArticleClickListener to pass movie instance when user clicked on item
         itemView.setOnClickListener(v -> onArticleClickListener.onArticleClick(article));
     }
- }
+
+    @Override
+    View getItemView() {
+        return itemView;
+    }
+
+    @Override
+    ImageView getRelatedPic() {
+        return null;
+    }
+
+    @Override
+    TextView getDescriptionview() {
+        return descriptionview;
+    }
+}
 

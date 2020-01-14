@@ -27,27 +27,44 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
         android:layout_marginEnd="5dp"
+        android:layout_marginTop="8dp"
         android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="@color/colorPrimaryDark"
+        android:gravity="top"
         tools:text="some title here"
         app:layout_constraintStart_toEndOf="@+id/pic_imageView_logo"
         app:layout_constraintBottom_toTopOf="@id/pic_barier"
         app:layout_constraintEnd_toStartOf="@id/pic_barier_vert"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/pic_textView_date"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        android:textSize="12sp"
+        android:textStyle="italic"
+        android:textColor="@android:color/darker_gray"
+        tools:text="01/01/2020"
+        app:layout_constraintStart_toStartOf="@+id/pic_textView_title"
+        app:layout_constraintTop_toBottomOf="@+id/pic_textView_title" />
 
 
     <TextView
         android:id="@+id/pic_textView_description"
         android:layout_width="0dp"
-        app:layout_constrainedWidth="true"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="24dp"
         android:layout_marginEnd="5dp"
-        android:textSize="16sp"
         android:gravity="start"
-        tools:text="some boring description newer no one reade here"
+        android:textSize="16sp"
+        app:layout_constrainedWidth="true"
         app:layout_constraintEnd_toStartOf="@id/pic_barier_vert"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/pic_barier" />
+        app:layout_constraintTop_toBottomOf="@id/pic_barier"
+        tools:text="some boring description newer no one reade here" />
 
 
     <ImageView
@@ -67,11 +84,11 @@
     <View
         android:id="@+id/divider"
         android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:layout_marginTop="4dp"
+        android:layout_height="1dp"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="4dp"
         android:layout_marginEnd="16dp"
-        android:background="?android:attr/listDivider"
+        android:background="@color/colorPrimary"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -84,7 +101,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:barrierDirection="bottom"
-        app:constraint_referenced_ids="pic_imageView_logo,pic_textView_title"
+        app:constraint_referenced_ids="pic_imageView_logo,pic_textView_date"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 

@@ -12,6 +12,7 @@ import com.github.kalininaleksandrv.clickleefiglee.interfaces.BasePresenter;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -21,9 +22,12 @@ public class ArticlePresenter implements BasePresenter {
     private WeakReference<MainPageActivity> weakactivity;
     private Handler handler;
     private ArrayList<Article> data;
+    private Calendar calendar;
 
     public ArticlePresenter() {
+
         Log.i("MY", "Create new presenter");
+        calendar = Calendar.getInstance();
     }
 
     public void setDefaults(MainPageActivity mainPageActivity, Handler uiHandler){
@@ -46,12 +50,6 @@ public class ArticlePresenter implements BasePresenter {
     @Override
     public boolean isActivityAttached() {
         return weakactivity != null;
-    }
-
-    @Override
-    public void onUserStartInteraction() {
-        Log.i("MY", "User start interact");
-
     }
 
     @Override
@@ -99,6 +97,9 @@ public class ArticlePresenter implements BasePresenter {
             String moviedescription = "Article description has describe us an article, sic! " + nextarticle.hashCode();
             nextarticle.setContent(moviedescription);
             nextarticle.setMediatitle("Fake News Corp");
+            if (calendar !=null){
+                nextarticle.setDate(calendar.getTime().toString());
+            }
             if(id%2!=0) {
                 nextarticle.setState(States.NOPICTURE);
             } else {
