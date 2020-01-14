@@ -45,15 +45,13 @@ public class ArticlePresenter implements BasePresenter {
 
     @Override
     public boolean isActivityAttached() {
-        return weakactivity == null;
+        return weakactivity != null;
     }
 
     @Override
     public void onUserStartInteraction() {
         Log.i("MY", "User start interact");
-        if (isActivityAttached()){
-            weakactivity.get().showProgress();
-        }
+
     }
 
     @Override
@@ -62,6 +60,10 @@ public class ArticlePresenter implements BasePresenter {
 
         if(requirenew || (data != null ? data.size() : 0) != quantity) {
             Log.i("MY", "Trying to get data NEW");
+
+            if (isActivityAttached()){
+                weakactivity.get().showProgress();
+            }
             ExecutorService executorService = Executors.newSingleThreadExecutor();
             executorService.execute(() -> getDataFromModel(startposition, quantity));
         } else {

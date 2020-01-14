@@ -86,25 +86,6 @@ public class MainPageActivity extends AppCompatActivity implements OnArticleClic
         recyclerView.setAdapter(advancedMovieAdapter);
         recyclerView.setLayoutManager(layoutManager);
 
-        fab.setOnClickListener(v -> {
-//            Movie nextmovie;
-//            long id = maxid;
-//            maxid++;
-//            String movietitle = "Movie title " + id;
-//            nextmovie = new Movie(id, movietitle);
-//            String moviedescription = "Movie description " + nextmovie.hashCode();
-//            nextmovie.setDescription(moviedescription);
-//            if(id%2!=0) {
-//                nextmovie.setState(States.NOPICTURE);
-//            } else {
-//                nextmovie.setState(States.WITHPICTURE);
-//            }
-//            generatedListOfMovies.add(nextmovie);
-//
-//            internalList.clear();
-//            internalList.addAll(generatedListOfMovies);
-//            advancedMovieAdapter.notifyDataSetChanged();
-        });
     }
 
     @Override
@@ -135,6 +116,8 @@ public class MainPageActivity extends AppCompatActivity implements OnArticleClic
         presenter.onAcivityAttach(this, uiHandler);
         presenter.onUserStartInteraction();
         presenter.onUserFetchData(0,10, false);
+
+        fab.setOnClickListener(v -> presenter.onUserFetchData(0,10, true));
 
     }
 
