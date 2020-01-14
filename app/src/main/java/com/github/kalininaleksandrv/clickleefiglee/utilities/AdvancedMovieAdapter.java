@@ -44,21 +44,27 @@ public class AdvancedMovieAdapter extends RecyclerView.Adapter<AbstractViewHolde
     @Override
     public AbstractViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view;
+        AbstractViewHolder abstractViewHolder;
 
-        if (viewType == 1){
+        if (viewType == 1) {
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.article_item_pic, parent, false);
-            return new PicViewHolder(view);
+            abstractViewHolder = new PicViewHolder(view);
         } else {
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.article_item_nopic, parent, false);
-            return new NoPicViewHolder(view);
+            abstractViewHolder = new NoPicViewHolder(view);
         }
+
+        //use interface OnArticleClickListener to pass movie instance when user clicked on item
+        view.setOnClickListener(v -> onArticleClickListener.onArticleClick(abstractViewHolder.getAdapterPosition()));
+
+        return abstractViewHolder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull AbstractViewHolder holder, int position) {
         Article article = articles.get(position);
         //pass interface OnArticleClickListener to adapter and then to OnBindViewHolder
-        holder.bind(article, onArticleClickListener);
+        holder.bind(article);
         holder.getItemView().setAnimation(AnimationUtils.loadAnimation(context, R.anim.simple_animation_article));
         holder.getDescriptionview().setAnimation(AnimationUtils.loadAnimation(context, R.anim.alpha_animation));
         if(holder.getRelatedPic()!=null) holder.getRelatedPic().setAnimation(AnimationUtils.loadAnimation(context, R.anim.translate_plus_alpha));

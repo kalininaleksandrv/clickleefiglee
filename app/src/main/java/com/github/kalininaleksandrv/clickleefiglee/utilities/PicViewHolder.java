@@ -1,7 +1,6 @@
 package com.github.kalininaleksandrv.clickleefiglee.utilities;
 
 import android.view.View;
-import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -9,7 +8,6 @@ import androidx.annotation.NonNull;
 
 import com.github.kalininaleksandrv.clickleefiglee.R;
 import com.github.kalininaleksandrv.clickleefiglee.dao.Article;
-import com.github.kalininaleksandrv.clickleefiglee.interfaces.OnArticleClickListener;
 
 class PicViewHolder extends AbstractViewHolder {
 
@@ -31,17 +29,12 @@ class PicViewHolder extends AbstractViewHolder {
     }
 
     @Override
-    void bind(final Article article, final OnArticleClickListener onArticleClickListener) {
+    void bind(final Article article) {
         imageviewlogo.setImageResource(R.drawable.ic_new_releases_green_24dp);
         titleview.setText(article.getTitle());
         date.setText(article.getDate());
         descriptionview.setText(article.getContent());
         imageviewrel.setImageResource(R.drawable.samplepic_preview);
-
-        final int position = this.getAdapterPosition();
-
-        //use interface OnArticleClickListener to pass movie instance when user clicked on item
-        itemView.setOnClickListener(v -> onArticleClickListener.onArticleClick(position));
     }
 
     public View getItemView() {

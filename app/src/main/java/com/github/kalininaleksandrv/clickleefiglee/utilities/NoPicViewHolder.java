@@ -28,17 +28,11 @@ class NoPicViewHolder extends AbstractViewHolder {
     }
 
     @Override
-    void bind(final Article article, final OnArticleClickListener onArticleClickListener) {
+    void bind(final Article article) {
         imageviewlogo.setImageResource(R.drawable.ic_new_releases_green_24dp);
         titleview.setText(article.getTitle());
         date.setText(article.getDate());
         descriptionview.setText(article.getContent());
-
-        final int position = this.getAdapterPosition();
-
-        //use interface OnArticleClickListener to pass movie instance when user clicked on item
-        itemView.setOnClickListener(v -> onArticleClickListener.onArticleClick(position));
-
     }
 
     @Override
