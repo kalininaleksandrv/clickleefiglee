@@ -16,10 +16,12 @@ public class CustomDividerItemDecorator extends RecyclerView.ItemDecoration {
     private Drawable customdivider;
     private int markcolour;
     private int distanceBeetwinItems = 50;
+    private Paint paint;
 
     public CustomDividerItemDecorator(Drawable customdivider, int markcolour) {
         this.customdivider = customdivider;
         this.markcolour = markcolour;
+        this.paint = new Paint();
     }
 
     public CustomDividerItemDecorator(Drawable customdivider) {
@@ -76,7 +78,6 @@ public class CustomDividerItemDecorator extends RecyclerView.ItemDecoration {
     public void onDrawOver(@NonNull Canvas canvas, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
         super.onDrawOver(canvas, parent, state);
 
-        Paint paint = new Paint();
         paint.setColor(markcolour);
         paint.setStyle(Paint.Style.FILL_AND_STROKE);
         paint.setStrokeWidth(5);
@@ -96,7 +97,7 @@ public class CustomDividerItemDecorator extends RecyclerView.ItemDecoration {
             int extramarkRadius = 10;
 
             //set different divider colour depend on view type (type returned by Adapter.getViewType method)
-            int position = parent.getChildAdapterPosition(child);
+            int position = parent.getChildViewHolder(child).getAdapterPosition();
             int viewType = Objects.requireNonNull(parent.getAdapter()).getItemViewType(position);
 
             if(viewType == 0){
