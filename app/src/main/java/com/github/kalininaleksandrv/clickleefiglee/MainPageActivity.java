@@ -36,7 +36,9 @@ public class MainPageActivity extends AppCompatActivity implements OnArticleClic
     ProgressBar progressBar;
     FloatingActionButton fab;
     Handler uiHandler;
-    List<Article> internalList;
+    List<Article> commonlist;
+    List<Article> cliclbaitlist;
+
     RecyclerView recyclerView;
     ArticlePresenter presenter;
 
@@ -63,12 +65,18 @@ public class MainPageActivity extends AppCompatActivity implements OnArticleClic
             @Override
             public void handleMessage(@NonNull Message msg) {
                 if (msg.what == Constants.SUCSESS){
-                    ArrayList<Article> data;
-                    data = presenter.getDataToActivity();
+                    ArrayList<Article> data = presenter.getDataToActivity();
                     if(data!=null) {
                         hideProgress();
-                        internalList.clear();
-                        internalList.addAll(data);
+                        commonlist.clear();
+
+                        for (Article article : data) {
+                            if (article.isClickBait() || article.isFakeNews()){
+                                cliclbaitlist.add(article);
+                            } else {
+                                commonlist.add(article);
+                            }
+                        }
                         if (recyclerView.getAdapter() != null) {
                             recyclerView.getAdapter().notifyDataSetChanged();
                         }
@@ -125,22 +133,22 @@ public class MainPageActivity extends AppCompatActivity implements OnArticleClic
     //implement interface to hold click within recycle view
     @Override
     public void onArticleClick(int position) {
-        internalList.get(position).setTitle("Some changed title");
+        commonlist.get(position).setTitle("Some changed title");
         advancedMovieAdapter.notifyItemChanged(position);
         Toast.makeText(getApplicationContext(), String.valueOf(position), Toast.LENGTH_SHORT).show();
     }
 
     private void recyclerViewInitializer() {
-        internalList = new ArrayList<>();
+        commonlist = new ArrayList<>();
+        cliclbaitlist = new ArrayList<>();
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         //pass interface OnArticleClickListener to adapter and then to OnBindViewHolder
-        advancedMovieAdapter = new AdvancedMovieAdapter(this, internalList, this, presenter);
+        advancedMovieAdapter = new AdvancedMovieAdapter(this, commonlist, this, presenter);
         recyclerView.setAdapter(advancedMovieAdapter);
         recyclerView.setLayoutManager(layoutManager);
 
-        ItemTouchHelper.Callback callback =
-                new ArticleTouchHelperCallback(advancedMovieAdapter);
+        ItemTouchHelper.Callback callback = new ArticleTouchHelperCallback(advancedMovieAdapter);
         ItemTouchHelper touchHelper = new ItemTouchHelper(callback);
         touchHelper.attachToRecyclerView(recyclerView);
     }

@@ -1,10 +1,7 @@
 package com.github.kalininaleksandrv.clickleefiglee.utilities;
 
 import android.content.Context;
-import android.graphics.Path;
-import android.text.Layout;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
@@ -15,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.github.kalininaleksandrv.clickleefiglee.R;
 import com.github.kalininaleksandrv.clickleefiglee.dao.Article;
-import com.github.kalininaleksandrv.clickleefiglee.dao.Constants;
 import com.github.kalininaleksandrv.clickleefiglee.dao.States;
 import com.github.kalininaleksandrv.clickleefiglee.interfaces.BasePresenter;
 import com.github.kalininaleksandrv.clickleefiglee.interfaces.ItemTouchHelperAdapter;
@@ -55,7 +51,12 @@ public class AdvancedMovieAdapter extends RecyclerView.Adapter<AbstractViewHolde
         }
 
         //use interface OnArticleClickListener to pass movie instance when user clicked on item
-        view.setOnClickListener(v -> onArticleClickListener.onArticleClick(abstractViewHolder.getAdapterPosition()));
+        view.setOnClickListener(v -> {
+            int i = abstractViewHolder.getAdapterPosition();
+            if (i != RecyclerView.NO_POSITION) {
+                onArticleClickListener.onArticleClick(i);
+            }
+        });
 
         return abstractViewHolder;
     }
