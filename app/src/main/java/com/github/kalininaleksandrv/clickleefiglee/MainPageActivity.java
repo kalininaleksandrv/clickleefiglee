@@ -1,5 +1,6 @@
 package com.github.kalininaleksandrv.clickleefiglee;
 
+import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -153,7 +154,8 @@ public class MainPageActivity extends AppCompatActivity implements OnArticleClic
 
         Drawable dividerDrawable = ContextCompat.getDrawable(this, R.drawable.simpledivider);
         int dividerColour = R.color.colorDividerDark;
-        RecyclerView.ItemDecoration decoration = new CustomDividerItemDecorator(dividerDrawable, dividerColour);
+
+        RecyclerView.ItemDecoration decoration = new CustomDividerItemDecorator(dividerDrawable, this.getResources().getColor(dividerColour));
         recyclerView.addItemDecoration(decoration);
     }
 
