@@ -1,6 +1,7 @@
 package com.github.kalininaleksandrv.clickleefiglee.utilities;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -75,7 +76,13 @@ public class AdvancedMovieAdapter extends RecyclerView.Adapter<AbstractViewHolde
     @Override
     public int getItemViewType(int position) {
 
-        States state = articles.get(position).getState();
+        States state;
+        if (position >= 0 && position < articles.size()){
+            state = articles.get(position).getState();
+        } else{
+            state = States.NOPICTURE;
+            Log.i("MY", "INCORECT POSITION " + position);
+        }
 
         int stateid;
 

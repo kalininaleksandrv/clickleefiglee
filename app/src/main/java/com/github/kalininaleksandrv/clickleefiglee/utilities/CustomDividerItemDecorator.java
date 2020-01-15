@@ -31,7 +31,7 @@ public class CustomDividerItemDecorator extends RecyclerView.ItemDecoration {
         super.getItemOffsets(outRect, view, parent, state);
 
         //do not draw divider if there is only one item
-        if (parent.getChildAdapterPosition(view) == 0) {
+        if (parent.getChildViewHolder(view).getAdapterPosition() == 0) {
             return;
         }
         //here set distance between items with our custom constant to plus
