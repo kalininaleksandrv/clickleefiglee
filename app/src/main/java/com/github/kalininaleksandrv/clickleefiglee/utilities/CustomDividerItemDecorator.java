@@ -8,12 +8,18 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.github.kalininaleksandrv.clickleefiglee.R;
+import java.util.Objects;
 
 public class CustomDividerItemDecorator extends RecyclerView.ItemDecoration {
 
     private Drawable customdivider;
+    private int customcolour;
     private int distanceBeetwinItems = 50;
+
+    public CustomDividerItemDecorator(Drawable customdivider, int customcolour) {
+        this.customdivider = customdivider;
+        this.customcolour = customcolour;
+    }
 
     public CustomDividerItemDecorator(Drawable customdivider) {
         this.customdivider = customdivider;
@@ -27,8 +33,6 @@ public class CustomDividerItemDecorator extends RecyclerView.ItemDecoration {
         if (parent.getChildAdapterPosition(view) == 0) {
             return;
         }
-
-
         //here set distance between items with our custom constant to plus
         outRect.top = customdivider.getIntrinsicHeight()+distanceBeetwinItems;
     }
@@ -52,9 +56,20 @@ public class CustomDividerItemDecorator extends RecyclerView.ItemDecoration {
 
             RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child.getLayoutParams();
 
-            //apply custom distance to top and bottom drawing divider
+            //set different divider colour depend on view type (type returned by Adapter.getViewType method)
+            View view = parent.getChildAt(i);
+            int position = parent.getChildAdapterPosition(view);
+            int viewType = Objects.requireNonNull(parent.getAdapter()).getItemViewType(position);
+
             //height of divider
-            int dividerheight = 3;
+            int dividerheight;
+
+            if (viewType == 1){
+                dividerheight = 10;
+            } else {
+                dividerheight = 3;
+            }
+
             //looking for center of distance between elements minus half of divider height and here will be start of divider
             int dividerTop = child.getBottom() + params.bottomMargin+(distanceBeetwinItems/2)-(dividerheight/2);
             //bottom = start plus height of divider
@@ -62,6 +77,7 @@ public class CustomDividerItemDecorator extends RecyclerView.ItemDecoration {
 
             customdivider.setBounds(dividerLeft, dividerTop, dividerRight, dividerBottom);
             customdivider.draw(canvas);
+
         }
 
     }

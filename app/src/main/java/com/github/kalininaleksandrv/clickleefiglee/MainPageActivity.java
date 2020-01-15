@@ -152,7 +152,8 @@ public class MainPageActivity extends AppCompatActivity implements OnArticleClic
         touchHelper.attachToRecyclerView(recyclerView);
 
         Drawable dividerDrawable = ContextCompat.getDrawable(this, R.drawable.simpledivider);
-        RecyclerView.ItemDecoration decoration = new CustomDividerItemDecorator(dividerDrawable);
+        int dividerColour = R.color.colorDividerDark;
+        RecyclerView.ItemDecoration decoration = new CustomDividerItemDecorator(dividerDrawable, dividerColour);
         recyclerView.addItemDecoration(decoration);
     }
 
