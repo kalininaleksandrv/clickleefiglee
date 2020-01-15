@@ -53,6 +53,7 @@ public class AdvancedMovieAdapter extends RecyclerView.Adapter<AbstractViewHolde
         //use interface OnArticleClickListener to pass movie instance when user clicked on item
         view.setOnClickListener(v -> {
             int i = abstractViewHolder.getAdapterPosition();
+            //it's very important to check out if RV return the proper position fot element
             if (i != RecyclerView.NO_POSITION) {
                 onArticleClickListener.onArticleClick(i);
             }

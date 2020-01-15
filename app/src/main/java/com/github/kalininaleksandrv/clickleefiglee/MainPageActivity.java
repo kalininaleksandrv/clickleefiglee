@@ -1,5 +1,6 @@
 package com.github.kalininaleksandrv.clickleefiglee;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -12,7 +13,9 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -24,11 +27,14 @@ import com.github.kalininaleksandrv.clickleefiglee.interfaces.OnArticleClickList
 import com.github.kalininaleksandrv.clickleefiglee.presenters.ArticlePresenter;
 import com.github.kalininaleksandrv.clickleefiglee.utilities.AdvancedMovieAdapter;
 import com.github.kalininaleksandrv.clickleefiglee.utilities.ArticleTouchHelperCallback;
+import com.github.kalininaleksandrv.clickleefiglee.utilities.CustomDividerItemDecorator;
 import com.github.kalininaleksandrv.clickleefiglee.viewmodels.PresenterViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static androidx.recyclerview.widget.LinearLayoutManager.VERTICAL;
 
 public class MainPageActivity extends AppCompatActivity implements OnArticleClickListener, BaseUi {
 
@@ -69,14 +75,8 @@ public class MainPageActivity extends AppCompatActivity implements OnArticleClic
                     if(data!=null) {
                         hideProgress();
                         commonlist.clear();
+                        separateArticleList(data);
 
-                        for (Article article : data) {
-                            if (article.isClickBait() || article.isFakeNews()){
-                                cliclbaitlist.add(article);
-                            } else {
-                                commonlist.add(article);
-                            }
-                        }
                         if (recyclerView.getAdapter() != null) {
                             recyclerView.getAdapter().notifyDataSetChanged();
                         }
@@ -92,7 +92,6 @@ public class MainPageActivity extends AppCompatActivity implements OnArticleClic
         presenter.onUserFetchData(0,10, false);
 
         fab.setOnClickListener(v -> presenter.onUserFetchData(0,10, true));
-
     }
 
     @Override
@@ -151,12 +150,28 @@ public class MainPageActivity extends AppCompatActivity implements OnArticleClic
         ItemTouchHelper.Callback callback = new ArticleTouchHelperCallback(advancedMovieAdapter);
         ItemTouchHelper touchHelper = new ItemTouchHelper(callback);
         touchHelper.attachToRecyclerView(recyclerView);
+
+        Drawable dividerDrawable = ContextCompat.getDrawable(this, R.drawable.simpledivider);
+        RecyclerView.ItemDecoration decoration = new CustomDividerItemDecorator(dividerDrawable);
+        recyclerView.addItemDecoration(decoration);
     }
 
     private void viewInitializer() {
         progressBar = findViewById(R.id.recycling_progressBar);
         recyclerView = findViewById(R.id.recycling_recycleview);
         fab = findViewById(R.id.recycling_fab);
+    }
+
+
+    private void separateArticleList(ArrayList<Article> data) {
+        //separate list for click-bait and fakenews elements
+        for (Article article : data) {
+            if (article.isClickBait() || article.isFakeNews()){
+                cliclbaitlist.add(article);
+            } else {
+                commonlist.add(article);
+            }
+        }
     }
 
 }
