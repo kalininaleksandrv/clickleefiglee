@@ -1,5 +1,6 @@
 package com.github.kalininaleksandrv.clickleefiglee;
 
+import android.content.Context;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -148,14 +149,11 @@ public class MainPageActivity extends AppCompatActivity implements OnArticleClic
         recyclerView.setAdapter(advancedMovieAdapter);
         recyclerView.setLayoutManager(layoutManager);
 
-        ItemTouchHelper.Callback callback = new ArticleTouchHelperCallback(advancedMovieAdapter);
+        ItemTouchHelper.Callback callback = new ArticleTouchHelperCallback(advancedMovieAdapter, this);
         ItemTouchHelper touchHelper = new ItemTouchHelper(callback);
         touchHelper.attachToRecyclerView(recyclerView);
 
-        Drawable dividerDrawable = ContextCompat.getDrawable(this, R.drawable.simpledivider);
-        int dividerColour = R.color.colorDividerDark;
-
-        RecyclerView.ItemDecoration decoration = new CustomDividerItemDecorator(dividerDrawable, this.getResources().getColor(dividerColour));
+        RecyclerView.ItemDecoration decoration = new CustomDividerItemDecorator(this);
         recyclerView.addItemDecoration(decoration);
     }
 

@@ -1,5 +1,6 @@
 package com.github.kalininaleksandrv.clickleefiglee.utilities;
 
+import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
@@ -7,25 +8,34 @@ import android.graphics.drawable.Drawable;
 import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.github.kalininaleksandrv.clickleefiglee.R;
 
 import java.util.Objects;
 
 public class CustomDividerItemDecorator extends RecyclerView.ItemDecoration {
 
+    private Context context;
     private Drawable customdivider;
-    private int markcolour;
     private int distanceBeetwinItems = 50;
     private Paint paint;
 
-    public CustomDividerItemDecorator(Drawable customdivider, int markcolour) {
-        this.customdivider = customdivider;
-        this.markcolour = markcolour;
-        this.paint = new Paint();
+    public CustomDividerItemDecorator(Context context) {
+
+        this.context = context;
+        initDrawableElements();
     }
 
-    public CustomDividerItemDecorator(Drawable customdivider) {
-        this.customdivider = customdivider;
+
+    private void initDrawableElements(){
+
+        paint = new Paint();
+        paint.setColor(context.getColor(R.color.colorDividerDark));
+        paint.setStyle(Paint.Style.FILL_AND_STROKE);
+
+        customdivider = ContextCompat.getDrawable(context, R.drawable.simpledivider);
     }
 
     @Override
@@ -78,8 +88,7 @@ public class CustomDividerItemDecorator extends RecyclerView.ItemDecoration {
     public void onDrawOver(@NonNull Canvas canvas, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
         super.onDrawOver(canvas, parent, state);
 
-        paint.setColor(markcolour);
-        paint.setStyle(Paint.Style.FILL_AND_STROKE);
+
         paint.setStrokeWidth(5);
 
         int extramarkLeft = parent.getPaddingLeft()+20;

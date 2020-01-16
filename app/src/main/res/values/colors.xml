@@ -5,4 +5,6 @@
     <color name="colorAccent">#9C27B0</color>
     <color name="colorDivider">#A1A8D5</color>
     <color name="colorDividerDark">#2196F3</color>
+    <color name="colorBackgroundLight">#FFF59D</color>
+    <color name="colorBackgroundNative">#90CAF9</color>
 </resources>
