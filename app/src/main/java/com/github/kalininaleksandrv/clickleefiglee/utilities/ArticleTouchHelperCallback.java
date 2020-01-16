@@ -2,6 +2,7 @@ package com.github.kalininaleksandrv.clickleefiglee.utilities;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.view.View;
@@ -21,6 +22,7 @@ public class ArticleTouchHelperCallback extends ItemTouchHelper.Callback {
     private ColorDrawable swipeRightBackground;
     private Drawable swipeLeftIcon;
     private Drawable swipeRightIcon;
+    private Paint paintSquare;
 
     public ArticleTouchHelperCallback(ItemTouchHelperAdapter itemTouchHelperAdapter, Context context) {
         this.itemTouchHelperAdapter = itemTouchHelperAdapter;
@@ -33,6 +35,12 @@ public class ArticleTouchHelperCallback extends ItemTouchHelper.Callback {
         swipeRightBackground = new ColorDrawable(context.getColor(R.color.colorBackgroundNative));
         swipeLeftIcon = context.getDrawable(R.drawable.ic_sentiment_very_dissatisfied_red_48dp);
         swipeRightIcon = context.getDrawable(R.drawable.ic_send_blue_48dp);
+
+        paintSquare = new Paint();
+        paintSquare.setColor(context.getColor(R.color.colorPrimaryDark));
+        paintSquare.setStyle(Paint.Style.STROKE);
+        paintSquare.setStrokeWidth(3f);
+
     }
 
     @Override
@@ -57,13 +65,17 @@ public class ArticleTouchHelperCallback extends ItemTouchHelper.Callback {
         super.onChildDraw(canvas, parent, viewHolder, dX, dY, actionState, isCurrentlyActive);
 
         View itemView = viewHolder.itemView;
-        int itemheight = itemView.getMeasuredHeight();
+        int itemHeight = itemView.getMeasuredHeight();
+        int thirdOfHeight = itemHeight/3;
+        int halfOfHeight = itemHeight/2;
 
-        int sendiconwidth = swipeRightIcon.getIntrinsicWidth();
-        int sendiconheight = swipeRightIcon.getIntrinsicHeight();
+        int sendIconWidth = swipeRightIcon.getIntrinsicWidth();
+        int halfOfSendIconHeight = swipeRightIcon.getIntrinsicHeight()/2;
 
-        int disapointiconwidth = swipeLeftIcon.getIntrinsicWidth();
-        int disapointiconheight = swipeLeftIcon.getIntrinsicHeight();
+        int disapointIconWidth = swipeLeftIcon.getIntrinsicWidth();
+        int halfOfDisapointIconHeight = swipeLeftIcon.getIntrinsicHeight()/2;
+
+        int squareMargin = 3;
 
         //when swipe right (else - when left)
         if (dX > 0 ){
@@ -73,21 +85,28 @@ public class ArticleTouchHelperCallback extends ItemTouchHelper.Callback {
                     (int) (itemView.getLeft() + dX),
                     itemView.getBottom());
 
+            //noinspection SuspiciousNameCombination
             swipeRightIcon.setBounds(
-                    itemheight/3,
-                    itemView.getTop()+itemheight/2-sendiconheight/2,
-                    itemheight/3+sendiconwidth,
-                    itemView.getTop()+itemheight/2+sendiconheight/2);
+                    thirdOfHeight,
+                    itemView.getTop()+itemHeight/2-halfOfSendIconHeight,
+                    itemHeight/3+sendIconWidth,
+                    itemView.getTop()+itemHeight/2+halfOfSendIconHeight);
 
             swipeRightBackground.draw(canvas);
             swipeRightIcon.draw(canvas);
+
+            canvas.drawRect(thirdOfHeight-squareMargin,
+                    itemView.getTop()+ halfOfHeight-halfOfSendIconHeight-squareMargin,
+                    thirdOfHeight+sendIconWidth+squareMargin,
+                    itemView.getTop()+halfOfHeight+halfOfSendIconHeight+squareMargin,
+                    paintSquare);
         }
         if (dX < 0){
             swipeLeftIcon.setBounds(
-                    itemView.getRight() - itemheight/3 - disapointiconwidth,
-                    itemView.getTop()+itemheight/2-disapointiconheight/2,
-                    itemView.getRight() - itemheight/3,
-                    itemView.getTop()+itemheight/2+disapointiconheight/2);
+                    itemView.getRight() - thirdOfHeight - disapointIconWidth,
+                    itemView.getTop()+halfOfHeight-halfOfDisapointIconHeight,
+                    itemView.getRight() - thirdOfHeight,
+                    itemView.getTop()+halfOfHeight+halfOfDisapointIconHeight);
 
             swipeLeftBackground.setBounds(
                     (int)(itemView.getRight() + dX),

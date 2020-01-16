@@ -18,8 +18,8 @@ import java.util.Objects;
 public class CustomDividerItemDecorator extends RecyclerView.ItemDecoration {
 
     private Context context;
-    private Drawable customdivider;
-    private int distanceBeetwinItems = 50;
+    private Drawable customDivider;
+    private int distanceBetweenItems = 50;
     private Paint paint;
 
     public CustomDividerItemDecorator(Context context) {
@@ -35,7 +35,7 @@ public class CustomDividerItemDecorator extends RecyclerView.ItemDecoration {
         paint.setColor(context.getColor(R.color.colorDividerDark));
         paint.setStyle(Paint.Style.FILL_AND_STROKE);
 
-        customdivider = ContextCompat.getDrawable(context, R.drawable.simpledivider);
+        customDivider = ContextCompat.getDrawable(context, R.drawable.simpledivider);
     }
 
     @Override
@@ -47,7 +47,7 @@ public class CustomDividerItemDecorator extends RecyclerView.ItemDecoration {
             return;
         }
         //here set distance between items with our custom constant to plus
-        outRect.top = customdivider.getIntrinsicHeight()+distanceBeetwinItems;
+        outRect.top = customDivider.getIntrinsicHeight()+ distanceBetweenItems;
     }
 
     //changing the height of outRect to the height of our divider to not overlapping othe views
@@ -56,11 +56,11 @@ public class CustomDividerItemDecorator extends RecyclerView.ItemDecoration {
         super.onDraw(canvas, parent, state);
 
         //take 10% of total with
-        int custompadding = (int) Math.round(parent.getWidth()*0.1);
+        int customPadding = (int) Math.round(parent.getWidth()*0.1);
 
         //apply custom padding to start and finish drawing figure
-        int dividerLeft = parent.getPaddingLeft()+custompadding;
-        int dividerRight = parent.getWidth() - parent.getPaddingRight()-custompadding;
+        int dividerLeft = parent.getPaddingLeft()+customPadding;
+        int dividerRight = parent.getWidth() - parent.getPaddingRight()-customPadding;
 
 
         //measure height of each elements in cycle cause height of each could be different (unlike width)
@@ -75,12 +75,12 @@ public class CustomDividerItemDecorator extends RecyclerView.ItemDecoration {
 
 
             //looking for center of distance between elements minus half of divider height and here will be start of divider
-            int dividerTop = child.getBottom() + params.bottomMargin+(distanceBeetwinItems/2)-(dividerheight/2);
+            int dividerTop = child.getBottom() + params.bottomMargin+(distanceBetweenItems /2)-(dividerheight/2);
             //bottom = start plus height of divider
             int dividerBottom = dividerTop + dividerheight;
 
-            customdivider.setBounds(dividerLeft, dividerTop, dividerRight, dividerBottom);
-            customdivider.draw(canvas);
+            customDivider.setBounds(dividerLeft, dividerTop, dividerRight, dividerBottom);
+            customDivider.draw(canvas);
         }
     }
 
@@ -99,18 +99,18 @@ public class CustomDividerItemDecorator extends RecyclerView.ItemDecoration {
             View child = parent.getChildAt(i);
 
             //take half of item height
-            int halfheight = child.getMeasuredHeight()/2;
+            int halfHeight = child.getMeasuredHeight()/2;
 
             //apply custom padding to start and finish extra-mark figure
-            int extramarkCenter = child.getTop()+halfheight;
-            int extramarkRadius = 10;
+            int extraMarkCenter = child.getTop()+halfHeight;
+            int extraMarkRadius = 10;
 
             //set different divider colour depend on view type (type returned by Adapter.getViewType method)
             int position = parent.getChildViewHolder(child).getAdapterPosition();
             int viewType = Objects.requireNonNull(parent.getAdapter()).getItemViewType(position);
 
             if(viewType == 0){
-                canvas.drawCircle(extramarkLeft, extramarkCenter, extramarkRadius, paint);
+                canvas.drawCircle(extramarkLeft, extraMarkCenter, extraMarkRadius, paint);
             }
         }
     }
