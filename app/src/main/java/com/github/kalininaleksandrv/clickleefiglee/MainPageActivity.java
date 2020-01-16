@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.github.kalininaleksandrv.clickleefiglee.customviews.CustomIndicatedView;
 import com.github.kalininaleksandrv.clickleefiglee.dao.Article;
 import com.github.kalininaleksandrv.clickleefiglee.dao.Constants;
 import com.github.kalininaleksandrv.clickleefiglee.interfaces.BaseUi;
@@ -33,15 +34,17 @@ import java.util.List;
 
 public class MainPageActivity extends AppCompatActivity implements OnArticleClickListener, BaseUi {
 
-    AdvancedMovieAdapter advancedMovieAdapter;
     ProgressBar progressBar;
     FloatingActionButton fab;
-    Handler uiHandler;
-    List<Article> commonlist;
-    List<Article> cliclbaitlist;
+    CustomIndicatedView customIndicatedView;
 
+    AdvancedMovieAdapter advancedMovieAdapter;
+    Handler uiHandler;
     RecyclerView recyclerView;
     ArticlePresenter presenter;
+
+    List<Article> commonlist;
+    List<Article> cliclbaitlist;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -129,7 +132,10 @@ public class MainPageActivity extends AppCompatActivity implements OnArticleClic
     public void onArticleClick(int position) {
         commonlist.get(position).setTitle("Some changed title");
         advancedMovieAdapter.notifyItemChanged(position);
-        Toast.makeText(getApplicationContext(), String.valueOf(position), Toast.LENGTH_SHORT).show();
+
+        // TODO: 16.01.20 change temp realization
+        customIndicatedView.setActiveIndicator(customIndicatedView.getActiveIndicator()+1);
+        customIndicatedView.invalidate();
     }
 
     private void recyclerViewInitializer() {
@@ -154,6 +160,7 @@ public class MainPageActivity extends AppCompatActivity implements OnArticleClic
         progressBar = findViewById(R.id.recycling_progressBar);
         recyclerView = findViewById(R.id.recycling_recycleview);
         fab = findViewById(R.id.recycling_fab);
+        customIndicatedView = findViewById(R.id.recycling_indicator);
     }
 
 
